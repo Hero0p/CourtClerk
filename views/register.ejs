@@ -1,0 +1,97 @@
+<div class="container">
+  <div class="row justify-content-center mt-5">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header bg-primary text-white text-center">
+          <h3>Register</h3>
+        </div>
+        <div class="card-body">
+          <form action="/users/register" method="POST">
+            <div class="mb-3">
+              <label for="name" class="form-label">Name</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                class="form-control"
+                placeholder="Enter your name"
+                value="<%= typeof name != 'undefined' ? name : '' %>"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="form-control"
+                placeholder="Enter your email"
+                value="<%= typeof email != 'undefined' ? email : '' %>"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                class="form-control"
+                placeholder="Create a password"
+                required
+              />
+              <small class="text-muted">Password must be at least 6 characters</small>
+            </div>
+            <div class="mb-3">
+              <label for="password2" class="form-label">Confirm Password</label>
+              <input
+                type="password"
+                id="password2"
+                name="password2"
+                class="form-control"
+                placeholder="Confirm password"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">I am a:</label>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="userType"
+                  id="client"
+                  value="client"
+                  <%= typeof userType != 'undefined' && userType === 'client' ? 'checked' : '' %>
+                  required
+                />
+                <label class="form-check-label" for="client">
+                  Client (seeking legal help)
+                </label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="userType"
+                  id="lawyer"
+                  value="lawyer"
+                  <%= typeof userType != 'undefined' && userType === 'lawyer' ? 'checked' : '' %>
+                />
+                <label class="form-check-label" for="lawyer">
+                  Lawyer (offering legal services)
+                </label>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Register</button>
+          </form>
+          <div class="mt-4 text-center">
+            <p>Already have an account? <a href="/users/login">Login</a></p>
+            <a href="/" class="btn btn-link">Back to Home</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

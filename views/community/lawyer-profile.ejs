@@ -1,0 +1,135 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/community">Community</a></li>
+          <li class="breadcrumb-item"><a href="/community/lawyers">Lawyers</a></li>
+          <li class="breadcrumb-item active" aria-current="page"><%= lawyer.name %></li>
+        </ol>
+      </nav>
+      
+      <div class="row">
+        <div class="col-md-4">
+          <div class="card mb-4">
+            <div class="card-body text-center">
+              <img src="<%= lawyer.profilePicture %>" alt="<%= lawyer.name %>" class="rounded-circle mb-3" width="150" height="150">
+              <h3 class="card-title"><%= lawyer.name %></h3>
+              <p class="text-muted"><%= lawyer.specialization || 'General Practice' %></p>
+              
+              <div class="d-flex justify-content-center mb-3">
+                <span class="badge bg-primary me-2">
+                  <i class="fas fa-map-marker-alt me-1"></i>
+                  <%= lawyer.location || 'Not specified' %>
+                </span>
+                <span class="badge bg-success">
+                  <i class="fas fa-dollar-sign me-1"></i>
+                  $<%= lawyer.hourlyRate || '0' %>/hr
+                </span>
+              </div>
+              
+              <div class="d-grid gap-2">
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#contactModal">
+                  <i class="fas fa-envelope me-2"></i>
+                  Contact Lawyer
+                </button>
+                <a href="/community/jobs/new" class="btn btn-outline-primary">
+                  <i class="fas fa-briefcase me-2"></i>
+                  Post a Job
+                </a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card mb-4">
+            <div class="card-header bg-light">
+              <h5 class="mb-0">Contact Information</h5>
+            </div>
+            <div class="card-body">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-between">
+                  <span><i class="fas fa-envelope me-2"></i> Email:</span>
+                  <a href="mailto:<%= lawyer.email %>"><%= lawyer.email %></a>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                  <span><i class="fas fa-map-marker-alt me-2"></i> Location:</span>
+                  <span><%= lawyer.location || 'Not specified' %></span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                  <span><i class="fas fa-dollar-sign me-2"></i> Hourly Rate:</span>
+                  <span>$<%= lawyer.hourlyRate || '0' %></span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-8">
+          <div class="card mb-4">
+            <div class="card-header bg-light">
+              <h5 class="mb-0">About</h5>
+            </div>
+            <div class="card-body">
+              <% if (lawyer.bio) { %>
+                <p><%= lawyer.bio %></p>
+              <% } else { %>
+                <p class="text-muted">No bio available</p>
+              <% } %>
+            </div>
+          </div>
+          
+          <div class="card mb-4">
+            <div class="card-header bg-light">
+              <h5 class="mb-0">Specialization</h5>
+            </div>
+            <div class="card-body">
+              <% if (lawyer.specialization) { %>
+                <h6><%= lawyer.specialization %></h6>
+                <p>This lawyer specializes in <%= lawyer.specialization %> cases and related legal matters.</p>
+              <% } else { %>
+                <p class="text-muted">No specialization specified</p>
+              <% } %>
+            </div>
+          </div>
+          
+          <div class="card">
+            <div class="card-header bg-light">
+              <h5 class="mb-0">Reviews</h5>
+            </div>
+            <div class="card-body">
+              <p class="text-muted text-center">No reviews available yet</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Contact Modal -->
+<div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="contactModalLabel">Contact <%= lawyer.name %></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="subject" class="form-label">Subject</label>
+            <input type="text" class="form-control" id="subject" required>
+          </div>
+          <div class="mb-3">
+            <label for="message" class="form-label">Message</label>
+            <textarea class="form-control" id="message" rows="5" required></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary">Send Message</button>
+      </div>
+    </div>
+  </div>
+</div> 

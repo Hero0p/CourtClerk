@@ -1,0 +1,171 @@
+<!-- Add this right after the job description section -->
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-12">
+      <!-- Job Details Card -->
+      <div class="card mb-4">
+        <div class="card-body">
+          <h4 class="card-title"><%= job.title %></h4>
+          <div class="job-meta mb-3">
+            <span class="badge bg-<%= job.status === 'open' ? 'primary' : (job.status === 'in_progress' ? 'warning' : 'success') %> me-2">
+              <%= job.status.replace('_', ' ').toUpperCase() %>
+            </span>
+            <span class="text-muted">Posted on <%= new Date(job.createdAt).toLocaleDateString() %></span>
+          </div>
+          <p class="card-text"><%= job.description %></p>
+          
+          <div class="job-details mt-4">
+            <div class="row">
+              <div class="col-md-6">
+                <h5>Job Details</h5>
+                <ul class="list-unstyled">
+                  <li><strong>Category:</strong> <%= job.category %></li>
+                  <li><strong>Budget:</strong> $<%= job.budget %></li>
+                  <li><strong>Location:</strong> <%= job.location %></li>
+                </ul>
+              </div>
+              <% if (job.assignedLawyer) { %>
+                <div class="col-md-6">
+                  <h5>Assigned Lawyer</h5>
+                  <div class="d-flex align-items-center">
+                    <img src="<%= job.assignedLawyer.profilePicture || '/images/default-avatar.png' %>" 
+                         alt="Lawyer" 
+                         class="rounded-circle me-2" 
+                         style="width: 40px; height: 40px; object-fit: cover;">
+                    <div>
+                      <h6 class="mb-0"><%= job.assignedLawyer.name %></h6>
+                      <small class="text-muted"><%= job.assignedLawyer.specialization %></small>
+                    </div>
+                  </div>
+                </div>
+              <% } %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Job Actions Card -->
+      <div class="card mb-4">
+        <div class="card-body">
+          <h5 class="card-title">Job Actions</h5>
+          <div class="d-flex gap-2 mt-3">
+            <% if (job.status !== 'completed') { %>
+              <button class="btn btn-success" id="markCompletedBtn">
+                <i class="fas fa-check-circle me-2"></i>Mark as Completed
+              </button>
+              <a href="/chats/lawyer/<%= job._id %>" class="btn btn-primary">
+                <i class="fas fa-comments me-2"></i>Chat with <%= user._id.toString() === job.client.toString() ? 'Lawyer' : 'Client' %>
+              </a>
+            <% } else { %>
+              <div class="alert alert-success mb-0 w-100">
+                <i class="fas fa-check-circle me-2"></i>This job has been completed
+              </div>
+              <% if (job.assignedLawyer) { %>
+                <a href="/chats/lawyer/<%= job._id %>" class="btn btn-outline-primary">
+                  <i class="fas fa-history me-2"></i>View Chat History
+                </a>
+              <% } %>
+            <% } %>
+
+            <% if (job.status === 'open' && user.role === 'lawyer') { %>
+              <button class="btn btn-primary" id="applyJobBtn">
+                <i class="fas fa-paper-plane me-2"></i>Apply for this Job
+              </button>
+            <% } %>
+          </div>
+        </div>
+      </div>
+
+      <!-- Applications Section if the job is open and user is the client -->
+      <% if (job.status === 'open' && user._id.toString() === job.client.toString()) { %>
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title">Applications</h5>
+            <div id="applicationsList">
+              <!-- Applications will be loaded here -->
+            </div>
+          </div>
+        </div>
+      <% } %>
+    </div>
+  </div>
+</div>
+
+<!-- Complete Job Modal -->
+<div class="modal fade" id="completeJobModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Complete Job</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to mark this job as completed? This action cannot be undone.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-success" id="confirmCompleteBtn">Mark as Completed</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const markCompletedBtn = document.getElementById('markCompletedBtn');
+  const completeJobModal = new bootstrap.Modal(document.getElementById('completeJobModal'));
+  const confirmCompleteBtn = document.getElementById('confirmCompleteBtn');
+
+  if (markCompletedBtn) {
+    markCompletedBtn.addEventListener('click', () => {
+      completeJobModal.show();
+    });
+
+    confirmCompleteBtn.addEventListener('click', async () => {
+      try {
+        const response = await fetch(`/jobs/<%= job._id %>/complete`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to complete job');
+        }
+
+        const data = await response.json();
+
+        if (data.success) {
+          // Show success message
+          const alert = document.createElement('div');
+          alert.className = 'alert alert-success';
+          alert.innerHTML = '<i class="fas fa-check-circle me-2"></i>Job marked as completed successfully';
+          
+          // Replace the buttons with completion message
+          const actionsDiv = markCompletedBtn.parentElement;
+          actionsDiv.innerHTML = '';
+          actionsDiv.appendChild(alert);
+          
+          // Hide the modal
+          completeJobModal.hide();
+          
+          // Reload the page after a short delay
+          setTimeout(() => {
+            window.location.reload();
+          }, 1500);
+        } else {
+          throw new Error(data.error || 'Failed to complete job');
+        }
+      } catch (error) {
+        console.error('Error completing job:', error);
+        const alert = document.createElement('div');
+        alert.className = 'alert alert-danger';
+        alert.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>Failed to mark job as completed';
+        document.querySelector('.card-body').insertBefore(alert, document.querySelector('.d-flex'));
+        completeJobModal.hide();
+      }
+    });
+  }
+});
+</script> 

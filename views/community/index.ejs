@@ -1,0 +1,98 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card mb-4">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <h2 class="card-title">Community</h2>
+            <% if (userType === 'client') { %>
+              <a href="/community/jobs/new" class="btn btn-primary">
+                <i class="fas fa-plus me-2"></i>
+                Post a Job
+              </a>
+            <% } %>
+          </div>
+          <p class="card-text">
+            <% if (userType === 'client') { %>
+              Connect with qualified lawyers and get the legal help you need.
+            <% } else { %>
+              Browse job listings and connect with potential clients.
+            <% } %>
+          </p>
+        </div>
+      </div>
+      
+      <div class="row mb-4">
+        <div class="col-md-12">
+          <ul class="nav nav-tabs">
+            <li class="nav-item">
+              <a class="nav-link active" href="/community">Job Listings</a>
+            </li>
+            <% if (userType === 'client') { %>
+              <li class="nav-item">
+                <a class="nav-link" href="/community/lawyers">Browse Lawyers</a>
+              </li>
+            <% } %>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-md-12">
+          <% if (jobs && jobs.length > 0) { %>
+            <div class="row">
+              <% jobs.forEach(job => { %>
+                <div class="col-md-6 col-lg-4 mb-4">
+                  <div class="card h-100">
+                    <div class="card-header">
+                      <span class="badge bg-<%= job.status === 'open' ? 'success' : (job.status === 'in_progress' ? 'warning' : 'secondary') %> float-end">
+                        <%= job.status.replace('_', ' ').toUpperCase() %>
+                      </span>
+                      <h5 class="card-title mb-0"><%= job.title %></h5>
+                    </div>
+                    <div class="card-body">
+                      <p class="card-text text-truncate mb-2"><%= job.description %></p>
+                      <div class="d-flex justify-content-between mb-2">
+                        <small class="text-muted">
+                          <i class="fas fa-tag me-1"></i> <%= job.category %>
+                        </small>
+                        <small class="text-muted">
+                          <i class="fas fa-dollar-sign me-1"></i> $<%= job.budget.min %> - $<%= job.budget.max %>
+                        </small>
+                      </div>
+                      <% if (job.skills && job.skills.length > 0) { %>
+                        <div class="mb-2">
+                          <% job.skills.slice(0, 3).forEach(skill => { %>
+                            <span class="badge bg-light text-dark me-1"><%= skill %></span>
+                          <% }) %>
+                          <% if (job.skills.length > 3) { %>
+                            <span class="badge bg-light text-dark">+<%= job.skills.length - 3 %> more</span>
+                          <% } %>
+                        </div>
+                      <% } %>
+                      <div class="d-flex justify-content-between align-items-center mt-3">
+                        <small class="text-muted">
+                          <i class="fas fa-clock me-1"></i> 
+                          <%= new Date(job.createdAt).toLocaleDateString() %>
+                        </small>
+                        <a href="/community/jobs/<%= job._id %>" class="btn btn-sm btn-outline-primary">View Details</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <% }) %>
+            </div>
+          <% } else { %>
+            <div class="alert alert-info">
+              <% if (userType === 'client') { %>
+                You haven't posted any jobs yet. <a href="/community/jobs/new">Post a job</a> to get started.
+              <% } else { %>
+                No job listings available at the moment. Check back later for new opportunities.
+              <% } %>
+            </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

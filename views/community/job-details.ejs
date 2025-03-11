@@ -1,0 +1,208 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/community">Community</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Job Details</li>
+        </ol>
+      </nav>
+      
+      <div class="card mb-4">
+        <div class="card-header bg-light">
+          <div class="d-flex justify-content-between align-items-center">
+            <h3 class="mb-0"><%= job.title %></h3>
+            <span class="badge bg-<%= job.status === 'open' ? 'success' : (job.status === 'in_progress' ? 'warning' : 'secondary') %>">
+              <%= job.status.replace('_', ' ').toUpperCase() %>
+            </span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-8">
+              <h5>Description</h5>
+              <p><%= job.description %></p>
+              
+              <h5>Skills Required</h5>
+              <div class="mb-4">
+                <% if (job.skills && job.skills.length > 0) { %>
+                  <% job.skills.forEach(skill => { %>
+                    <span class="badge bg-light text-dark me-1 mb-1"><%= skill %></span>
+                  <% }) %>
+                <% } else { %>
+                  <p class="text-muted">No specific skills listed</p>
+                <% } %>
+              </div>
+              
+              <% if (!isOwner && userType === 'lawyer' && job.status === 'open') { %>
+                <% if (!hasApplied) { %>
+                  <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#applyModal">
+                    <i class="fas fa-paper-plane me-2"></i>
+                    Apply for this Job
+                  </button>
+                <% } else { %>
+                  <div class="alert alert-success">
+                    <i class="fas fa-check-circle me-2"></i>
+                    You have already applied for this job
+                  </div>
+                <% } %>
+              <% } else if (isOwner && job.status === 'open') { %>
+                <form action="/community/jobs/<%= job._id %>/complete" method="POST" class="d-inline">
+                  <button type="submit" class="btn btn-outline-secondary">
+                    <i class="fas fa-check-circle me-2"></i>
+                    Mark as Completed
+                  </button>
+                </form>
+              <% } %>
+            </div>
+            
+            <div class="col-md-4">
+              <div class="card">
+                <div class="card-header bg-light">
+                  <h5 class="mb-0">Job Details</h5>
+                </div>
+                <div class="card-body">
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between">
+                      <span>Category:</span>
+                      <span class="text-primary"><%= job.category %></span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                      <span>Budget:</span>
+                      <span class="text-primary">$<%= job.budget.min %> - $<%= job.budget.max %></span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                      <span>Posted by:</span>
+                      <span class="text-primary"><%= job.client.name %></span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                      <span>Posted on:</span>
+                      <span class="text-primary"><%= new Date(job.createdAt).toLocaleDateString() %></span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                      <span>Applications:</span>
+                      <span class="text-primary"><%= job.applications.length %></span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <% if (isOwner && job.applications && job.applications.length > 0) { %>
+            <div class="mt-5">
+              <h4>Applications (<%= job.applications.length %>)</h4>
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>Lawyer</th>
+                      <th>Proposed Rate</th>
+                      <th>Cover Letter</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% job.applications.forEach(app => { %>
+                      <tr>
+                        <td>
+                          <div class="d-flex align-items-center">
+                            <img src="<%= app.lawyer.profilePicture %>" alt="<%= app.lawyer.name %>" class="rounded-circle me-2" width="40" height="40">
+                            <div>
+                              <h6 class="mb-0"><%= app.lawyer.name %></h6>
+                              <small class="text-muted"><%= app.lawyer.email %></small>
+                            </div>
+                          </div>
+                        </td>
+                        <td>$<%= app.proposedRate %>/hr</td>
+                        <td>
+                          <button class="btn btn-sm btn-link" data-bs-toggle="modal" data-bs-target="#coverLetterModal<%= app.lawyer._id %>">
+                            View Cover Letter
+                          </button>
+                          
+                          <!-- Cover Letter Modal -->
+                          <div class="modal fade" id="coverLetterModal<%= app.lawyer._id %>" tabindex="-1" aria-labelledby="coverLetterModalLabel<%= app.lawyer._id %>" aria-hidden="true">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="coverLetterModalLabel<%= app.lawyer._id %>">Cover Letter from <%= app.lawyer.name %></h5>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                  <p><%= app.coverLetter %></p>
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <span class="badge bg-<%= app.status === 'pending' ? 'warning' : (app.status === 'accepted' ? 'success' : 'danger') %>">
+                            <%= app.status.toUpperCase() %>
+                          </span>
+                        </td>
+                        <td>
+                          <% if (app.status === 'pending') { %>
+                            <div class="btn-group" role="group">
+                              <form action="/community/jobs/<%= job._id %>/applications/<%= app._id %>/accept" method="POST" class="d-inline">
+                                <button type="submit" class="btn btn-sm btn-success me-1">
+                                  <i class="fas fa-check me-1"></i> Accept
+                                </button>
+                              </form>
+                              <form action="/community/jobs/<%= job._id %>/applications/<%= app._id %>/reject" method="POST" class="d-inline">
+                                <button type="submit" class="btn btn-sm btn-danger">
+                                  <i class="fas fa-times me-1"></i> Reject
+                                </button>
+                              </form>
+                            </div>
+                          <% } else if (app.status === 'accepted') { %>
+                            <a href="/community/lawyers/<%= app.lawyer._id %>" class="btn btn-sm btn-outline-primary">
+                              <i class="fas fa-user me-1"></i> View Profile
+                            </a>
+                          <% } %>
+                        </td>
+                      </tr>
+                    <% }) %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Apply Modal -->
+<div class="modal fade" id="applyModal" tabindex="-1" aria-labelledby="applyModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="applyModalLabel">Apply for "<%= job.title %>"</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="/community/jobs/<%= job._id %>/apply" method="POST">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="proposedRate" class="form-label">Your Hourly Rate ($)</label>
+            <input type="number" class="form-control" id="proposedRate" name="proposedRate" min="1" required>
+            <small class="text-muted">Client's budget: $<%= job.budget.min %> - $<%= job.budget.max %></small>
+          </div>
+          <div class="mb-3">
+            <label for="coverLetter" class="form-label">Cover Letter</label>
+            <textarea class="form-control" id="coverLetter" name="coverLetter" rows="5" required></textarea>
+            <small class="text-muted">Explain why you're a good fit for this job</small>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Submit Application</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div> 

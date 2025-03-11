@@ -1,0 +1,52 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card mb-4">
+        <div class="card-header bg-light">
+          <div class="d-flex justify-content-between align-items-center">
+            <h3 class="mb-0">Your Chats</h3>
+            <a href="/chats/new" class="btn btn-primary">
+              <i class="fas fa-plus me-2"></i>
+              New Chat
+            </a>
+          </div>
+        </div>
+        <div class="card-body">
+          <% if (chats && chats.length > 0) { %>
+            <div class="list-group">
+              <% chats.forEach(chat => { %>
+                <a href="/chats/<%= chat._id %>" class="list-group-item list-group-item-action">
+                  <div class="d-flex w-100 justify-content-between align-items-center">
+                    <div>
+                      <i class="<%= chat.isAIChat ? 'fas fa-robot text-primary' : 'fas fa-user text-success' %> me-2"></i>
+                      <h5 class="mb-1"><%= chat.title %></h5>
+                      <% if (chat.messages && chat.messages.length > 0) { %>
+                        <small class="text-muted">
+                          Last message: <%= new Date(chat.updatedAt).toLocaleString() %>
+                        </small>
+                      <% } else { %>
+                        <small class="text-muted">No messages yet</small>
+                      <% } %>
+                    </div>
+                    <span class="badge bg-primary rounded-pill">
+                      <%= chat.messages ? chat.messages.length : 0 %> messages
+                    </span>
+                  </div>
+                </a>
+              <% }) %>
+            </div>
+          <% } else { %>
+            <div class="text-center py-5">
+              <i class="fas fa-comment-dots fa-3x mb-3 text-muted"></i>
+              <p class="lead">You don't have any chats yet.</p>
+              <a href="/chats/new" class="btn btn-primary">
+                <i class="fas fa-plus me-2"></i>
+                Start a New Chat
+              </a>
+            </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

@@ -1,0 +1,106 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card mb-4">
+        <div class="card-header bg-light">
+          <h3 class="mb-0">Your Profile</h3>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-4 text-center mb-4 mb-md-0">
+              <img src="<%= user.profilePicture %>" alt="<%= user.name %>" class="rounded-circle mb-3" width="150" height="150">
+              <h4><%= user.name %></h4>
+              <p class="text-muted"><%= user.userType.charAt(0).toUpperCase() + user.userType.slice(1) %></p>
+              <button class="btn btn-sm btn-outline-primary" disabled>
+                <i class="fas fa-camera me-1"></i>
+                Change Photo
+              </button>
+            </div>
+            
+            <div class="col-md-8">
+              <form action="/users/profile" method="POST">
+                <div class="mb-3">
+                  <label for="name" class="form-label">Name</label>
+                  <input type="text" class="form-control" id="name" name="name" value="<%= user.name %>" required>
+                </div>
+                
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email</label>
+                  <input type="email" class="form-control" id="email" value="<%= user.email %>" disabled>
+                  <small class="text-muted">Email cannot be changed</small>
+                </div>
+                
+                <div class="mb-3">
+                  <label for="bio" class="form-label">Bio</label>
+                  <textarea class="form-control" id="bio" name="bio" rows="3"><%= user.bio %></textarea>
+                </div>
+                
+                <div class="mb-3">
+                  <label for="location" class="form-label">Location</label>
+                  <input type="text" class="form-control" id="location" name="location" value="<%= user.location %>">
+                </div>
+                
+                <% if (user.userType === 'lawyer') { %>
+                  <div class="mb-3">
+                    <label for="specialization" class="form-label">Specialization</label>
+                    <select class="form-select" id="specialization" name="specialization">
+                      <option value="" <%= !user.specialization ? 'selected' : '' %>>Select Specialization</option>
+                      <option value="Family Law" <%= user.specialization === 'Family Law' ? 'selected' : '' %>>Family Law</option>
+                      <option value="Criminal Law" <%= user.specialization === 'Criminal Law' ? 'selected' : '' %>>Criminal Law</option>
+                      <option value="Corporate Law" <%= user.specialization === 'Corporate Law' ? 'selected' : '' %>>Corporate Law</option>
+                      <option value="Intellectual Property" <%= user.specialization === 'Intellectual Property' ? 'selected' : '' %>>Intellectual Property</option>
+                      <option value="Real Estate" <%= user.specialization === 'Real Estate' ? 'selected' : '' %>>Real Estate</option>
+                      <option value="Immigration" <%= user.specialization === 'Immigration' ? 'selected' : '' %>>Immigration</option>
+                      <option value="Tax Law" <%= user.specialization === 'Tax Law' ? 'selected' : '' %>>Tax Law</option>
+                      <option value="Employment Law" <%= user.specialization === 'Employment Law' ? 'selected' : '' %>>Employment Law</option>
+                      <option value="Personal Injury" <%= user.specialization === 'Personal Injury' ? 'selected' : '' %>>Personal Injury</option>
+                    </select>
+                  </div>
+                  
+                  <div class="mb-3">
+                    <label for="hourlyRate" class="form-label">Hourly Rate ($)</label>
+                    <input type="number" class="form-control" id="hourlyRate" name="hourlyRate" value="<%= user.hourlyRate %>" min="0">
+                  </div>
+                <% } %>
+                
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                  <a href="/dashboard" class="btn btn-outline-secondary me-md-2">Cancel</a>
+                  <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card">
+        <div class="card-header bg-light">
+          <h3 class="mb-0">Account Security</h3>
+        </div>
+        <div class="card-body">
+          <form>
+            <div class="mb-3">
+              <label for="currentPassword" class="form-label">Current Password</label>
+              <input type="password" class="form-control" id="currentPassword">
+            </div>
+            
+            <div class="mb-3">
+              <label for="newPassword" class="form-label">New Password</label>
+              <input type="password" class="form-control" id="newPassword">
+            </div>
+            
+            <div class="mb-3">
+              <label for="confirmPassword" class="form-label">Confirm New Password</label>
+              <input type="password" class="form-control" id="confirmPassword">
+            </div>
+            
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+              <button type="submit" class="btn btn-primary" disabled>Change Password</button>
+              <small class="text-muted d-block mt-2">Password change functionality is disabled in this demo</small>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

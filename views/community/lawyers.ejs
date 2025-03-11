@@ -1,0 +1,133 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/community">Community</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Browse Lawyers</li>
+        </ol>
+      </nav>
+      
+      <div class="card mb-4">
+        <div class="card-body">
+          <h2 class="card-title">Browse Lawyers</h2>
+          <p class="card-text">Find qualified legal professionals for your needs</p>
+        </div>
+      </div>
+      
+      <div class="row mb-4">
+        <div class="col-md-12">
+          <ul class="nav nav-tabs">
+            <li class="nav-item">
+              <a class="nav-link" href="/community">Job Listings</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="/community/lawyers">Browse Lawyers</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-md-3">
+          <div class="card mb-4">
+            <div class="card-header bg-light">
+              <h5 class="mb-0">Filter Lawyers</h5>
+            </div>
+            <div class="card-body">
+              <form id="filterForm">
+                <div class="mb-3">
+                  <label for="specialization" class="form-label">Specialization</label>
+                  <select class="form-select" id="specialization">
+                    <option value="">All Specializations</option>
+                    <option value="Family Law">Family Law</option>
+                    <option value="Criminal Law">Criminal Law</option>
+                    <option value="Corporate Law">Corporate Law</option>
+                    <option value="Intellectual Property">Intellectual Property</option>
+                    <option value="Real Estate">Real Estate</option>
+                    <option value="Immigration">Immigration</option>
+                    <option value="Tax Law">Tax Law</option>
+                    <option value="Employment Law">Employment Law</option>
+                    <option value="Personal Injury">Personal Injury</option>
+                  </select>
+                </div>
+                
+                <div class="mb-3">
+                  <label for="location" class="form-label">Location</label>
+                  <input type="text" class="form-control" id="location" placeholder="Any location">
+                </div>
+                
+                <div class="mb-3">
+                  <label for="rateRange" class="form-label">Hourly Rate</label>
+                  <div class="d-flex align-items-center">
+                    <span>$0</span>
+                    <input type="range" class="form-range mx-2" id="rateRange" min="0" max="500" step="10" value="500">
+                    <span>$<span id="rateValue">500</span></span>
+                  </div>
+                </div>
+                
+                <div class="d-grid">
+                  <button type="submit" class="btn btn-primary">Apply Filters</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-9">
+          <% if (lawyers && lawyers.length > 0) { %>
+            <div class="row">
+              <% lawyers.forEach(lawyer => { %>
+                <div class="col-md-6 col-lg-4 mb-4">
+                  <div class="card h-100">
+                    <div class="card-body">
+                      <div class="text-center mb-3">
+                        <img src="<%= lawyer.profilePicture %>" alt="<%= lawyer.name %>" class="rounded-circle" width="80" height="80">
+                        <h5 class="mt-2 mb-0"><%= lawyer.name %></h5>
+                        <p class="text-muted"><%= lawyer.specialization || 'General Practice' %></p>
+                      </div>
+                      
+                      <div class="mb-3">
+                        <div class="d-flex justify-content-between mb-2">
+                          <span><i class="fas fa-map-marker-alt me-2"></i> Location:</span>
+                          <span class="text-primary"><%= lawyer.location || 'Not specified' %></span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                          <span><i class="fas fa-dollar-sign me-2"></i> Hourly Rate:</span>
+                          <span class="text-primary">$<%= lawyer.hourlyRate || '0' %></span>
+                        </div>
+                      </div>
+                      
+                      <p class="card-text text-truncate mb-3"><%= lawyer.bio || 'No bio available' %></p>
+                      
+                      <div class="d-grid">
+                        <a href="/community/lawyers/<%= lawyer._id %>" class="btn btn-outline-primary">View Profile</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <% }) %>
+            </div>
+          <% } else { %>
+            <div class="alert alert-info">
+              No lawyers found matching your criteria. Try adjusting your filters.
+            </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const rateRange = document.getElementById('rateRange');
+    const rateValue = document.getElementById('rateValue');
+    
+    rateRange.addEventListener('input', function() {
+      rateValue.textContent = this.value;
+    });
+    
+    // Filter functionality would be implemented here in a real application
+  });
+</script> 

@@ -1,0 +1,75 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/community">Community</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Post a Job</li>
+        </ol>
+      </nav>
+      
+      <div class="card">
+        <div class="card-header bg-light">
+          <h3 class="mb-0">Post a New Job</h3>
+        </div>
+        <div class="card-body">
+          <form action="/community/jobs" method="POST">
+            <div class="mb-3">
+              <label for="title" class="form-label">Job Title</label>
+              <input type="text" class="form-control" id="title" name="title" required>
+              <small class="text-muted">Be specific and clear about what you need</small>
+            </div>
+            
+            <div class="mb-3">
+              <label for="description" class="form-label">Job Description</label>
+              <textarea class="form-control" id="description" name="description" rows="5" required></textarea>
+              <small class="text-muted">Provide detailed information about the legal help you need</small>
+            </div>
+            
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="category" class="form-label">Category</label>
+                <select class="form-select" id="category" name="category" required>
+                  <option value="" selected disabled>Select a category</option>
+                  <option value="Family Law">Family Law</option>
+                  <option value="Criminal Law">Criminal Law</option>
+                  <option value="Corporate Law">Corporate Law</option>
+                  <option value="Intellectual Property">Intellectual Property</option>
+                  <option value="Real Estate">Real Estate</option>
+                  <option value="Immigration">Immigration</option>
+                  <option value="Tax Law">Tax Law</option>
+                  <option value="Employment Law">Employment Law</option>
+                  <option value="Personal Injury">Personal Injury</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              
+              <div class="col-md-6">
+                <label for="skills" class="form-label">Required Skills</label>
+                <input type="text" class="form-control" id="skills" name="skills">
+                <small class="text-muted">Comma-separated list of skills (e.g., Contract Review, Negotiation)</small>
+              </div>
+            </div>
+            
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="budgetMin" class="form-label">Minimum Budget ($)</label>
+                <input type="number" class="form-control" id="budgetMin" name="budgetMin" min="1" required>
+              </div>
+              
+              <div class="col-md-6">
+                <label for="budgetMax" class="form-label">Maximum Budget ($)</label>
+                <input type="number" class="form-control" id="budgetMax" name="budgetMax" min="1" required>
+              </div>
+            </div>
+            
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+              <a href="/community" class="btn btn-outline-secondary me-md-2">Cancel</a>
+              <button type="submit" class="btn btn-primary">Post Job</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 
