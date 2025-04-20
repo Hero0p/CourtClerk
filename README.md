@@ -78,6 +78,8 @@ CourtClerk only deals with **Central Indian Laws**. It does **not** cover state-
    ```bash
    git clone https://github.com/your-username/CourtClerk.git
    cd CourtClerk
+   python -m venv env
+   ./env/Scripts/acivate
    ```
 
 2. **Install Python Dependencies**
@@ -95,8 +97,9 @@ CourtClerk only deals with **Central Indian Laws**. It does **not** cover state-
    - Add credentials for MongoDB, API keys for Gemini, etc.
 
 5. **Run the Project**
-   - Backend (Node.js): `npm start`
-   - AI Engine (Python): `python app.py`
+   - activate python environment (Python): `./env/Scripts/activate`
+   - start the server (Node.js): `npm start`
+  
 
 ---
 
