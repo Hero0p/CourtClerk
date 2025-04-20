@@ -51,10 +51,6 @@ CourtClerk specializes in the following branches of **Central Laws** only:
 
 ### 🐍 Backend (AI & NLP)
 - **Python**
-  - `PyMuPDF` – PDF parsing and text extraction
-  - `NLTK` – Natural Language Processing
-  - `Pandas` – Data processing and structuring
-  - `LangChain` – Framework for building language model apps
 - **Gemini-1.5-Flash** – LLM for summarization and Q&A
 - **JSON** – Data exchange and storage format
 
