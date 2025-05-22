@@ -20,15 +20,6 @@ CourtClerk specializes in the following branches of **Central Laws** only:
 
 ---
 
-## 📂 LEGAL DOCUMENTS SUPPORTED
-
-- **The Constitution of India**
-- **Indian Penal Code (IPC)**
-- **Code of Criminal Procedure (CrPC)**
-- **Case Judgments**
-- **Legal Commentaries**
-
----
 
 ## 🚀 FEATURES
 
