@@ -105,9 +105,10 @@ This project is open-source under the [MIT License](LICENSE).
 Developed by a passionate team of legal-tech enthusiasts aiming to bridge the gap between law and accessibility through AI.
 
 backend : Nishant Chaudhary
-frontend : Sameer Kaushik
+frontend : Sameer Kaushik.
 community section : Pradhuman Singh Rajvi
 research and debugging : Pranshul Gupta.
 
 ---
+
 
