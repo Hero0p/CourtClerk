@@ -22,8 +22,8 @@ require('./config/passport')(passport);
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/legal-ai-chat')
-.then(() => console.log('MongoDB connected'))
-.catch(err => console.log('MongoDB connection error:', err));
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.log('MongoDB connection error:', err));
 
 // EJS setup
 app.use(expressLayouts);
@@ -46,7 +46,7 @@ app.use(session({
   secret: process.env.SESSION_SECRET || 'secret',
   resave: false,
   saveUninitialized: false,
-  store: MongoStore.create({ 
+  store: MongoStore.create({
     mongoUrl: process.env.MONGODB_URI || 'mongodb://localhost:27017/legal-ai-chat'
   }),
   cookie: {
@@ -73,7 +73,7 @@ app.use((req, res, next) => {
 // Socket.io connection
 io.on('connection', (socket) => {
   console.log('A user connected');
-  
+
   // Handle chat message
   socket.on('chatMessage', async (data) => {
     try {
@@ -84,12 +84,12 @@ io.on('connection', (socket) => {
         content: data.message,
         timestamp: new Date()
       };
-      
+
       await Chat.findByIdAndUpdate(
         data.chatId,
         { $push: { messages: newMessage } }
       );
-      
+
       // Emit message to client
       io.emit('message', {
         chatId: data.chatId,
@@ -99,7 +99,7 @@ io.on('connection', (socket) => {
       console.error('Error saving message:', err);
     }
   });
-  
+
   socket.on('disconnect', () => {
     console.log('User disconnected');
   });
@@ -110,6 +110,7 @@ app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
 app.use('/chats', require('./routes/chats'));
 app.use('/community', require('./routes/community'));
+app.use('/summarization', require('./routes/summarization'));
 
 // Error handling middleware
 app.use((err, req, res, next) => {
@@ -122,7 +123,6 @@ app.use((err, req, res, next) => {
   });
 });
 
-// 404 handler - must be after all other routes
 app.use((req, res) => {
   res.status(404).render('error', {
     layout: 'layouts/main',
@@ -132,7 +132,7 @@ app.use((req, res) => {
   });
 });
 
-// Start server
+
 http.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 }); 

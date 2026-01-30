@@ -1,0 +1,37 @@
+<div class="container mt-4">
+  <h2>Legal Document Summarizer</h2>
+  <form id="summarizeForm" action="/summarization" method="POST" enctype="multipart/form-data" class="mb-4">
+    <div class="mb-3">
+      <label for="docFile" class="form-label">Upload Document (PDF, Word, or Text)</label>
+      <input class="form-control" type="file" id="docFile" name="docFile" accept=".pdf,.doc,.docx,.txt" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Summarize</button>
+  </form>
+  <div id="summaryResult">
+    <% if (summary) { %>
+      <div class="card mt-4">
+        <div class="card-header">Summary</div>
+        <div class="card-body">
+          <p><%= summary.text %></p>
+          <h6>Keywords:</h6>
+          <ul>
+            <% summary.keywords.forEach(function(keyword) { %>
+              <li><%= keyword %></li>
+            <% }); %>
+          </ul>
+          <% if (summary.trickyTerms && summary.trickyTerms.length > 0) { %>
+            <h6>Important/Tricky Terms & Conditions:</h6>
+            <ul>
+              <% summary.trickyTerms.forEach(function(term) { %>
+                <li><%= term %></li>
+              <% }); %>
+            </ul>
+          <% } %>
+        </div>
+      </div>
+    <% } %>
+  </div>
+</div>
+<script>
+  // Optionally, add AJAX for upload and summary display without reload
+</script>
