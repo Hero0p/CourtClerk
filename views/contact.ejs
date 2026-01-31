@@ -1,150 +1,185 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="card mb-4">
-        <div class="card-header bg-light">
-          <h3 class="mb-0">Contact Us</h3>
+<div class="container-fluid p-0">
+  <div class="row g-4">
+    <!-- Contact Form Section -->
+    <div class="col-lg-8">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-header bg-white border-bottom-0 pt-4 pb-0 px-4">
+          <h4 class="mb-0 fw-bold text-primary">Send us a Message</h4>
+          <p class="text-muted small mt-1">We typically reply within 24 hours.</p>
         </div>
-        <div class="card-body">
-          <div class="row">
-            <div class="col-md-6">
-              <form>
-                <div class="mb-3">
-                  <label for="name" class="form-label">Your Name</label>
-                  <input type="text" class="form-control" id="name" value="<%= user.name %>" required>
-                </div>
-                
-                <div class="mb-3">
-                  <label for="email" class="form-label">Your Email</label>
-                  <input type="email" class="form-control" id="email" value="<%= user.email %>" required>
-                </div>
-                
-                <div class="mb-3">
-                  <label for="subject" class="form-label">Subject</label>
-                  <input type="text" class="form-control" id="subject" required>
-                </div>
-                
-                <div class="mb-3">
-                  <label for="message" class="form-label">Message</label>
-                  <textarea class="form-control" id="message" rows="5" required></textarea>
-                </div>
-                
-                <div class="d-grid">
-                  <button type="submit" class="btn btn-primary">Send Message</button>
-                </div>
-              </form>
-            </div>
-            
-            <div class="col-md-6">
-              <div class="card h-100">
-                <div class="card-body">
-                  <h4 class="card-title mb-4">Get in Touch</h4>
-                  
-                  <div class="d-flex mb-4">
-                    <div class="bg-primary text-white rounded-circle p-3 me-3">
-                      <i class="fas fa-map-marker-alt"></i>
-                    </div>
-                    <div>
-                      <h5>Our Location</h5>
-                      <p>BENNETT UNIVERSITY, GREATER NOIDA<br>UTTAR PRADESH, INDIA</p>
-                    </div>
-                  </div>
-                  
-                  <div class="d-flex mb-4">
-                    <div class="bg-primary text-white rounded-circle p-3 me-3">
-                      <i class="fas fa-envelope"></i>
-                    </div>
-                    <div>
-                      <h5>Email Us</h5>
-                      <p>support@courtclerk.com<br>info@courtclerk.com</p>
-                    </div>
-                  </div>
-                  
-                  <div class="d-flex mb-4">
-                    <div class="bg-primary text-white rounded-circle p-3 me-3">
-                      <i class="fas fa-phone"></i>
-                    </div>
-                    <div>
-                      <h5>Call Us</h5>
-                      <p>+91 62654-24813<br>+91 63503-23494</p>
-                    </div>
-                  </div>
-                  
-                  <div class="d-flex">
-                    <div class="bg-primary text-white rounded-circle p-3 me-3">
-                      <i class="fas fa-clock"></i>
-                    </div>
-                    <div>
-                      <h5>Business Hours</h5>
-                      <p>Monday - Friday: 9:00 AM - 5:00 PM<br>Saturday & Sunday: Closed</p>
-                    </div>
-                  </div>
-                </div>
+        <div class="card-body p-4">
+          <form>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="name" class="form-label fw-bold small text-muted">Your Name</label>
+                <input type="text" class="form-control bg-light border-0 py-2.5" id="name" value="<%= user.name %>"
+                  required>
+              </div>
+              <div class="col-md-6">
+                <label for="email" class="form-label fw-bold small text-muted">Your Email</label>
+                <input type="email" class="form-control bg-light border-0 py-2.5" id="email" value="<%= user.email %>"
+                  required>
+              </div>
+              <div class="col-12">
+                <label for="subject" class="form-label fw-bold small text-muted">Subject</label>
+                <input type="text" class="form-control bg-light border-0 py-2.5" id="subject" required>
+              </div>
+              <div class="col-12">
+                <label for="message" class="form-label fw-bold small text-muted">Message</label>
+                <textarea class="form-control bg-light border-0" id="message" rows="6" required></textarea>
+              </div>
+              <div class="col-12 mt-4">
+                <button type="submit" class="btn btn-primary px-4 py-2 fw-medium">
+                  <i class="fas fa-paper-plane me-2"></i> Send Message
+                </button>
               </div>
             </div>
-          </div>
+          </form>
         </div>
       </div>
-      
-      <div class="card">
-        <div class="card-body">
-          <h4 class="card-title mb-4">Frequently Asked Questions</h4>
-          
-          <div class="accordion" id="faqAccordion">
-            <div class="accordion-item">
+    </div>
+
+    <!-- Contact Info Section -->
+    <div class="col-lg-4">
+      <div class="card border-0 shadow-sm bg-primary text-white h-100 position-relative overflow-hidden">
+
+        <div class="card-body p-4 position-relative">
+          <h4 class="mb-4 fw-bold">Get in Touch</h4>
+
+          <div class="d-flex align-items-start mb-4">
+            <div
+              class="bg-white bg-opacity-25 rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
+              style="width: 48px; height: 48px;">
+              <i class="fas fa-map-marker-alt text-white"></i>
+            </div>
+            <div class="ms-3">
+              <h6 class="fw-bold mb-1" style="color: var(--secondary-color);">Our Location</h6>
+              <p class="small mb-0 opacity-75">BENNETT UNIVERSITY, GREATER NOIDA<br>UTTAR PRADESH, INDIA</p>
+            </div>
+          </div>
+
+          <div class="d-flex align-items-start mb-4">
+            <div
+              class="bg-white bg-opacity-25 rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
+              style="width: 48px; height: 48px;">
+              <i class="fas fa-envelope text-white"></i>
+            </div>
+            <div class="ms-3">
+              <h6 class="fw-bold mb-1" style="color: var(--secondary-color);">Email Us</h6>
+              <p class="small mb-0 opacity-75">support@courtclerk.com<br>info@courtclerk.com</p>
+            </div>
+          </div>
+
+          <div class="d-flex align-items-start mb-4">
+            <div
+              class="bg-white bg-opacity-25 rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
+              style="width: 48px; height: 48px;">
+              <i class="fas fa-phone text-white"></i>
+            </div>
+            <div class="ms-3">
+              <h6 class="fw-bold mb-1" style="color: var(--secondary-color);">Call Us</h6>
+              <p class="small mb-0 opacity-75">+91 62654-24813<br>+91 63503-23494</p>
+            </div>
+          </div>
+
+          <div class="d-flex align-items-start">
+            <div
+              class="bg-white bg-opacity-25 rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
+              style="width: 48px; height: 48px;">
+              <i class="fas fa-clock text-white"></i>
+            </div>
+            <div class="ms-3">
+              <h6 class="fw-bold mb-1" style="color: var(--secondary-color);">Business Hours</h6>
+              <p class="small mb-0 opacity-75">Mon - Fri: 9:00 AM - 5:00 PM<br>Sat & Sun: Closed</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ Section -->
+  <div class="row mt-4">
+    <div class="col-12">
+      <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white border-bottom-0 pt-4 px-4">
+          <h4 class="mb-0 fw-bold text-primary">Frequently Asked Questions</h4>
+        </div>
+        <div class="card-body p-4">
+          <div class="accordion accordion-flush" id="faqAccordion">
+
+            <div class="accordion-item border-bottom">
               <h2 class="accordion-header" id="headingOne">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                <button class="accordion-button fw-medium" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                   How does the AI Chat work?
                 </button>
               </h2>
-              <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
-                <div class="accordion-body">
-                  Our AI Chat: CourtClerk uses advanced natural language processing to understand your legal questions and provide helpful responses. While it can give general information, it's important to note that AI responses should not be considered formal legal advice.
+              <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                data-bs-parent="#faqAccordion">
+                <div class="accordion-body text-muted small">
+                  Our AI Chat: CourtClerk uses advanced natural language processing to understand your legal questions
+                  and provide helpful responses. While it can give general information, it's important to note that AI
+                  responses should not be considered formal legal advice.
                 </div>
               </div>
             </div>
-            
-            <div class="accordion-item">
+
+            <div class="accordion-item border-bottom">
               <h2 class="accordion-header" id="headingTwo">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                <button class="accordion-button collapsed fw-medium" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                   How do I hire a lawyer through the community?
                 </button>
               </h2>
-              <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
-                <div class="accordion-body">
-                  You can hire a lawyer by either posting a job in the community section or by directly contacting a lawyer from our directory. Once a lawyer accepts your job or responds to your message, you can discuss details, negotiate rates, and proceed with the engagement.
+              <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                data-bs-parent="#faqAccordion">
+                <div class="accordion-body text-muted small">
+                  You can hire a lawyer by either posting a job in the community section or by directly contacting a
+                  lawyer from our directory. Once a lawyer accepts your job or responds to your message, you can discuss
+                  details, negotiate rates, and proceed with the engagement.
                 </div>
               </div>
             </div>
-            
-            <div class="accordion-item">
+
+            <div class="accordion-item border-bottom">
               <h2 class="accordion-header" id="headingThree">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                <button class="accordion-button collapsed fw-medium" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                   What types of legal services can I find here?
                 </button>
               </h2>
-              <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
-                <div class="accordion-body">
-                  Our platform connects you with lawyers specializing in various fields including family law, criminal law, corporate law, intellectual property, real estate, immigration, tax law, employment law, and personal injury. You can filter lawyers by specialization to find the right expert for your needs.
+              <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                data-bs-parent="#faqAccordion">
+                <div class="accordion-body text-muted small">
+                  Our platform connects you with lawyers specializing in various fields including family law, criminal
+                  law, corporate law, intellectual property, real estate, immigration, tax law, employment law, and
+                  personal injury. You can filter lawyers by specialization to find the right expert for your needs.
                 </div>
               </div>
             </div>
-            
+
             <div class="accordion-item">
               <h2 class="accordion-header" id="headingFour">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                <button class="accordion-button collapsed fw-medium" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
                   Is my information secure?
                 </button>
               </h2>
-              <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#faqAccordion">
-                <div class="accordion-body">
-                  Yes, we take data security very seriously. All communications are encrypted, and we follow industry best practices to protect your personal information and the details of your legal matters. Our privacy policy outlines how we collect, use, and protect your data.
+              <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
+                data-bs-parent="#faqAccordion">
+                <div class="accordion-body text-muted small">
+                  Yes, we take data security very seriously. All communications are encrypted, and we follow industry
+                  best practices to protect your personal information and the details of your legal matters. Our privacy
+                  policy outlines how we collect, use, and protect your data.
                 </div>
               </div>
             </div>
+
           </div>
         </div>
       </div>
     </div>
   </div>
-</div> 
+</div>

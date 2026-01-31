@@ -1,52 +1,71 @@
-<div class="container-fluid">
+<div class="container-fluid px-0">
+  <div class="page-header">
+    <div>
+      <h2 class="h3 mb-0">Consultations</h2>
+      <p class="text-muted small mb-0">Manage your legal conversations</p>
+    </div>
+    <div>
+      <a href="/chats/new" class="btn btn-primary shadow-sm">
+        <i class="fas fa-plus me-2"></i> New
+      </a>
+    </div>
+  </div>
+
   <div class="row">
     <div class="col-md-12">
-      <div class="card mb-4">
-        <div class="card-header bg-light">
-          <div class="d-flex justify-content-between align-items-center">
-            <h3 class="mb-0">Your Chats</h3>
-            <a href="/chats/new" class="btn btn-primary">
-              <i class="fas fa-plus me-2"></i>
-              New Chat
-            </a>
-          </div>
-        </div>
-        <div class="card-body">
-          <% if (chats && chats.length > 0) { %>
-            <div class="list-group">
-              <% chats.forEach(chat => { %>
-                <a href="/chats/<%= chat._id %>" class="list-group-item list-group-item-action">
+      <div class="card border-0 shadow-sm">
+        <div class="card-body p-0">
+          <% if (chats && chats.length> 0) { %>
+            <div class="list-group list-group-flush">
+              <% chats.forEach(chat=> { %>
+                <a href="/chats/<%= chat._id %>" class="list-group-item list-group-item-action border-0 px-4 py-3">
                   <div class="d-flex w-100 justify-content-between align-items-center">
-                    <div>
-                      <i class="<%= chat.isAIChat ? 'fas fa-robot text-primary' : 'fas fa-user text-success' %> me-2"></i>
-                      <h5 class="mb-1"><%= chat.title %></h5>
-                      <% if (chat.messages && chat.messages.length > 0) { %>
-                        <small class="text-muted">
-                          Last message: <%= new Date(chat.updatedAt).toLocaleString() %>
-                        </small>
-                      <% } else { %>
-                        <small class="text-muted">No messages yet</small>
-                      <% } %>
+                    <div class="d-flex align-items-center">
+                      <div class="avatar-sm bg-light rounded-circle p-2 me-3 text-center"
+                        style="width: 40px; height: 40px;">
+                        <i
+                          class="<%= chat.isAIChat ? 'fas fa-robot text-primary' : 'fas fa-user-tie text-secondary' %>"></i>
+                      </div>
+                      <div>
+                        <h6 class="mb-1 fw-bold text-dark">
+                          <%= chat.title %>
+                        </h6>
+                        <% if (chat.messages && chat.messages.length> 0) { %>
+                          <small class="text-muted">
+                            Last updated: <%= new Date(chat.updatedAt).toLocaleDateString() %>
+                              <%= new Date(chat.updatedAt).toLocaleTimeString([], {hour: '2-digit' , minute:'2-digit'})
+                                %>
+                          </small>
+                          <% } else { %>
+                            <small class="text-muted">New consultation</small>
+                            <% } %>
+                      </div>
                     </div>
-                    <span class="badge bg-primary rounded-pill">
-                      <%= chat.messages ? chat.messages.length : 0 %> messages
-                    </span>
+                    <div class="d-flex align-items-center">
+                      <span class="badge bg-light text-dark me-3 fw-normal">
+                        <%= chat.messages ? chat.messages.length : 0 %> msgs
+                      </span>
+                      <i class="fas fa-chevron-right text-muted small"></i>
+                    </div>
                   </div>
                 </a>
-              <% }) %>
+                <% }) %>
             </div>
-          <% } else { %>
-            <div class="text-center py-5">
-              <i class="fas fa-comment-dots fa-3x mb-3 text-muted"></i>
-              <p class="lead">You don't have any chats yet.</p>
-              <a href="/chats/new" class="btn btn-primary">
-                <i class="fas fa-plus me-2"></i>
-                Start a New Chat
-              </a>
-            </div>
-          <% } %>
+            <% } else { %>
+              <div class="text-center py-5">
+                <div class="mb-3">
+                  <i class="far fa-comments fa-3x text-light-gray opacity-25"></i>
+                </div>
+                <h5 class="text-muted mb-2">No consultations yet</h5>
+                <p class="text-muted small mb-4">Start a new conversation with our AI or a lawyer.</p>
+                <a href="/chats/new" class="btn btn-primary">
+                  <i class="fas fa-plus me-2"></i>
+                  Start New Consultation
+                </a>
+              </div>
+              <% } %>
         </div>
       </div>
     </div>
   </div>
-</div> 
+</div>

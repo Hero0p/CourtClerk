@@ -1,120 +1,138 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="card mb-4">
-        <div class="card-body">
-          <h2 class="card-title">Welcome, <%= user.name %></h2>
-          <p class="card-text">
-            <% if (user.userType === 'client') { %>
-              You're logged in as a client. You can chat with our AI assistant or connect with lawyers in the community.
-            <% } else { %>
-              You're logged in as a lawyer. You can browse job listings and connect with potential clients in the community.
-            <% } %>
-          </p>
-          <div class="d-flex gap-2">
-            <a href="/chats/new" class="btn btn-primary">
-              <i class="fas fa-robot me-2"></i>
-              Start AI Chat
-            </a>
-            <a href="/community" class="btn btn-success">
-              <i class="fas fa-users me-2"></i>
-              Go to Community
-            </a>
-          </div>
-        </div>
-      </div>
-      
-      <div class="row">
-        <div class="col-md-6">
-          <div class="card mb-4">
-            <div class="card-header d-flex justify-content-between align-items-center">
-              <h5 class="mb-0">Recent Chats</h5>
-              <a href="/chats/new" class="btn btn-sm btn-primary">
-                <i class="fas fa-plus me-1"></i>
-                New Chat
-              </a>
-            </div>
-            <div class="card-body">
-              <% if (chats && chats.length > 0) { %>
-                <ul class="list-group">
-                  <% chats.slice(0, 5).forEach(chat => { %>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                      <div>
-                        <i class="<%= chat.isAIChat ? 'fas fa-robot text-primary' : 'fas fa-user text-success' %> me-2"></i>
-                        <%= chat.title %>
-                      </div>
-                      <a href="/chats/<%= chat._id %>" class="btn btn-sm btn-outline-primary">
-                        Open
-                      </a>
-                    </li>
-                  <% }) %>
-                </ul>
-                <% if (chats.length > 5) { %>
-                  <div class="text-center mt-3">
-                    <a href="/chats" class="btn btn-link">View All Chats</a>
-                  </div>
-                <% } %>
-              <% } else { %>
-                <div class="text-center py-4">
-                  <i class="fas fa-comment-dots fa-3x text-muted mb-3"></i>
-                  <p>No recent chats. Start a new conversation!</p>
-                  <a href="/chats/new" class="btn btn-primary">
-                    <i class="fas fa-plus me-2"></i>
-                    Start New Chat
-                  </a>
-                </div>
-              <% } %>
-            </div>
-          </div>
-        </div>
-        
-        <div class="col-md-6">
-          <div class="card mb-4">
-            <div class="card-header">
-              <h5 class="mb-0">
-                <% if (user.userType === 'client') { %>
-                  Quick Actions
-                <% } else { %>
-                  Lawyer Dashboard
-                <% } %>
-              </h5>
-            </div>
-            <div class="card-body">
-              <% if (user.userType === 'client') { %>
-                <div class="d-grid gap-2">
-                  <a href="/chats/new" class="btn btn-outline-primary">
-                    <i class="fas fa-plus me-2"></i>
-                    New AI Chat
-                  </a>
-                  <a href="/community/jobs/new" class="btn btn-outline-success">
-                    <i class="fas fa-briefcase me-2"></i>
-                    Post a Job
-                  </a>
-                  <a href="/community/lawyers" class="btn btn-outline-info">
-                    <i class="fas fa-gavel me-2"></i>
-                    Browse Lawyers
-                  </a>
-                  <a href="/users/profile" class="btn btn-outline-secondary">
-                    <i class="fas fa-user-edit me-2"></i>
-                    Edit Profile
-                  </a>
-                </div>
-              <% } else { %>
-                <div class="d-grid gap-2">
-                  <a href="/community" class="btn btn-outline-success">
-                    <i class="fas fa-briefcase me-2"></i>
-                    Browse Job Listings
-                  </a>
-                  <a href="/users/profile" class="btn btn-outline-primary">
-                    <i class="fas fa-user-edit me-2"></i>
-                    Update Profile & Rates
-                  </a>
-                </div>
-              <% } %>
+<div class="container-fluid px-0">
+  <div class="page-header border-0 pb-0">
+    <div>
+      <h2 class="h3 mb-0">Dashboard</h2>
+      <p class="text-muted small mb-0">Welcome back, <%= user.name %>
+      </p>
+    </div>
+    <div>
+      <a href="/chats/new" class="btn btn-primary shadow-sm">
+        <i class="fas fa-plus me-2"></i> New
+      </a>
+    </div>
+  </div>
+
+  <div class="row g-4 mt-2">
+    <!-- Welcome Card -->
+    <div class="col-12">
+      <div class="card border-0 shadow-sm bg-dark text-white overflow-hidden" style="background: var(--primary-color);">
+        <div class="card-body p-4">
+          <div class="row align-items-center">
+            <div class="col-md-8">
+              <h3 class="card-title fw-bold mb-2">CourtClerk Assistant</h3>
+              <p class="card-text opacity-75 mb-3" style="font-size: 1.05rem; max-width: 600px;">
+                <% if (user.userType==='client' ) { %>
+                  Access AI-powered legal assistance or connect with experienced lawyers.
+                  <% } else { %>
+                    Manage your legal practice, connect with clients, and grow your network.
+                    <% } %>
+              </p>
+              <div class="d-flex gap-2">
+                <a href="/chats/new" class="btn btn-light text-primary fw-bold border-0">
+                  Start AI Chat
+                </a>
+                <a href="/community" class="btn btn-outline-light border-1">
+                  Community
+                </a>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- Recent Activity -->
+    <div class="col-lg-8">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-header bg-white border-bottom-0 pb-0 pt-3">
+          <h5 class="mb-0 fw-bold">Recent Consultations</h5>
+        </div>
+        <div class="card-body p-0 pt-2">
+          <% if (chats && chats.length> 0) { %>
+            <div class="list-group list-group-flush">
+              <% chats.slice(0, 5).forEach(chat=> { %>
+                <a href="/chats/<%= chat._id %>" class="list-group-item list-group-item-action border-0 px-4 py-3">
+                  <div class="d-flex w-100 justify-content-between align-items-center">
+                    <div class="d-flex align-items-center">
+                      <div class="me-3 text-center" style="width: 40px;">
+                        <% if(chat.isAIChat) { %>
+                          <span class="badge bg-light text-primary rounded-pill p-2">AI</span>
+                          <% } else { %>
+                            <span class="badge bg-light text-success rounded-pill p-2">Law</span>
+                            <% } %>
+                      </div>
+                      <div>
+                        <h6 class="mb-1 text-dark fw-bold">
+                          <%= chat.title || 'Untitled Consultation' %>
+                        </h6>
+                        <small class="text-muted">
+                          <%= new Date(chat.updatedAt).toLocaleDateString() %>
+                        </small>
+                      </div>
+                    </div>
+                    <i class="fas fa-chevron-right text-muted small"></i>
+                  </div>
+                </a>
+                <% }) %>
+            </div>
+            <% if (chats.length> 5) { %>
+              <div class="card-footer bg-white text-center border-0 py-3">
+                <a href="/chats" class="text-decoration-none fw-bold small">View All Consultations</a>
+              </div>
+              <% } %>
+                <% } else { %>
+                  <div class="text-center py-5">
+                    <h6 class="text-muted">No recent consultations</h6>
+                    <p class="text-muted small mb-3">Start a new chat to get legal advice.</p>
+                    <a href="/chats/new" class="btn btn-sm btn-outline-primary">
+                      Start Consultation
+                    </a>
+                  </div>
+                  <% } %>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sidebar / Actions -->
+    <div class="col-lg-4">
+      <div class="card border-0 shadow-sm mb-4">
+        <div class="card-header bg-white border-bottom-0 pt-3">
+          <h5 class="mb-0 fw-bold">
+            <% if (user.userType==='client' ) { %>
+              Quick Actions
+              <% } else { %>
+                Tools
+                <% } %>
+          </h5>
+        </div>
+        <div class="card-body">
+          <% if (user.userType==='client' ) { %>
+            <div class="d-grid gap-2">
+              <a href="/chats/new" class="btn btn-light text-start text-primary fw-medium">
+                Ask AI Lawyer
+              </a>
+              <a href="/community/jobs/new" class="btn btn-light text-start text-success fw-medium">
+                Post a Legal Case
+              </a>
+              <a href="/community/lawyers" class="btn btn-light text-start text-dark fw-medium">
+                Find a Lawyer
+              </a>
+            </div>
+            <% } else { %>
+              <div class="d-grid gap-2">
+                <a href="/community" class="btn btn-light text-start text-success fw-medium">
+                  Browse Open Cases
+                </a>
+                <a href="/users/profile" class="btn btn-light text-start text-primary fw-medium">
+                  Update Profile
+                </a>
+                <a href="/summarization" class="btn btn-light text-start text-dark fw-medium">
+                  Document Summarizer
+                </a>
+              </div>
+              <% } %>
+        </div>
+      </div>
+    </div>
   </div>
-</div> 
+</div>
